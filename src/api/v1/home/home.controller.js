@@ -12,8 +12,8 @@ function index(req: $Request, res: $Response): $Response {
   return res.status(HttpStatus.OK).json({ version: '1' });
 }
 
-const homeController = {
+const HomeController = {
   index,
 };
 
-export default homeController;
+export default HomeController;

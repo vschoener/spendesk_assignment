@@ -8,6 +8,7 @@ import type { AppConfig } from './config/';
 import router from './api';
 import logger from './logger';
 import MongoDB from './mongodb';
+import passport from './api/passport';
 
 /**
  * In Node App, I always see everything in app.js without a class / object aspect but I feel it could be improve
@@ -48,6 +49,8 @@ class App {
     // Logging
     this.expressApp.use(morgan('combined', { stream: logger.stream }));
 
+    this.expressApp.use(passport.initialize());
+    
     // Attach app routes
     this.expressApp.use(router);
 
