@@ -1,0 +1,29 @@
+version: "3.6"
+
+services:
+  app:
+    container_name: ${CONTAINER_PREFIX}.app
+    build: ./docker/app
+    volumes:
+      - .:/app
+    networks:
+      - assignment
+    ports:
+      - ${BIND_EXPRESS_PORT}:${EXPRESS_PORT}
+
+  mongodb:
+    container_name: ${CONTAINER_PREFIX}.mongodb
+    image: mongo
+    volumes:
+      - mongodb:/data/db
+    ports:
+      - ${BIND_MONGO_PORT}:27017
+    networks:
+      - assignment
+
+volumes:
+  mongodb: {}
+
+networks:
+  assignment:
+    name: spendensk_assignment
