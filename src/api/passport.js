@@ -10,12 +10,19 @@ passport.use('custom', new passportCustom.Strategy((req: $Request, done) => {
     companyId: req.headers['company-id'],
   };
 
-  let err: ?string;
-  if (!user.id || !user.companyId) {
-    err = 'Credentials required';
+  // Didn't find how to send json custom message for the client.
+  let errorMessage : ?string;
+  if (!user.id) {
+    errorMessage = 'User-Id is missing';
+  } else if (!user.companyId) {
+    errorMessage = 'Company-Id is missing';
   }
 
-  done(err, user);
+  if (errorMessage) {
+    return done(null, false, errorMessage);
+  }
+
+  return done(null, user);
 }));
 
 export default passport;

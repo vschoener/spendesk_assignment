@@ -50,7 +50,7 @@ class App {
     this.expressApp.use(morgan('combined', { stream: logger.stream }));
 
     this.expressApp.use(passport.initialize());
-    
+
     // Attach app routes
     this.expressApp.use(router);
 
@@ -63,10 +63,16 @@ class App {
     await this.mongoDb.connect();
   }
 
-  async start(): Promise<void> {
+  async start(): Promise<$Application> {
     await this.prepareMongoDb();
     this.server = await this.expressApp.listen(this.config.api.port);
     logger.log('info', `✔ Server running on port ${this.config.api.port}`);
+
+    return this.expressApp;
+  }
+
+  async stop(): Promise<void> {
+    return this.expressApp.stop();
   }
 
   getExpressApp(): $Application {

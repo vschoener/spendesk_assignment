@@ -36,4 +36,12 @@ ps:
 	docker-compose ps
 
 watch:
+	docker-compose stop app
 	docker-compose run --rm --service-ports app npm run watch
+
+testApp:
+	docker-compose run --rm app npm run test
+
+installDep:
+	npm install ${deps}
+	docker-compose run --rm app npm install ${deps}

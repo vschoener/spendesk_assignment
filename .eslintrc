@@ -3,12 +3,14 @@
   "parser": "babel-eslint",
   "env": {
     "jest": true,
-    "jasmine": true
+    "mocha": true
   },
   "plugins": [
-    "flowtype"
+    "flowtype",
+    "mocha"
   ],
   "rules": {
+    "mocha/no-exclusive-tests": "error",
     "max-len": [
       2,
       120
