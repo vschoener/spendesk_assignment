@@ -56,12 +56,11 @@ class App {
 
     this.expressApp.use(passport.initialize());
 
-    // Attach app routes
-    this.expressApp.use(router);
-
-
     // Api docs
     this.expressApp.use('/apidoc', express.static('apidoc'));
+
+    // Attach app routes
+    this.expressApp.use(router);
 
     this.attachRoutingIssueMiddleware();
   }

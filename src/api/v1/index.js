@@ -13,10 +13,15 @@ const router: Router = Router();
 // TODO: Add apiErrorExample
 
 /**
- * @api {get} / Get index
+ * @apiDefine Home access
+ * This optional description belong to to the group admin.
+ */
+
+/**
+ * @api {get} / Get api version
  *
  * @apiName GetIndex
- * @apiVersion 1
+ * @apiVersion 1.0.0
  *
  * @apiGroup Home
  *
@@ -27,17 +32,22 @@ const router: Router = Router();
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 200 OK
  *  {
- *    version: '1'
+ *    "version": "1"
  *  }
  *
  */
 router.get('/', HomeController.index);
 
 /**
- * @api {get} / List all user wallets
+ * @apiDefine Wallets resources
+ * This optional description belong to to the group admin.
+ */
+
+/**
+ * @api {get} /wallets List all user wallets
  *
  * @apiName ListUserWallets
- * @apiVersion 1
+ * @apiVersion 1.0.0
  *
  * @apiPermission User and Company Id request (JWT Token in real case would contains these value)
  * @apiHeader {integer} Client-Id The client identifier.
@@ -66,10 +76,10 @@ router.get('/', HomeController.index);
 router.get('/wallets', WalletController.getWallets);
 
 /**
- * @api {post} / Create new wallet
+ * @api {post} /wallets Create new wallet
  *
  * @apiName CreateWallet
- * @apiVersion 1
+ * @apiVersion 1.0.0
  *
  * @apiPermission User and Company Id request (JWT Token in real case would contains these value)
  * @apiHeader {integer} Client-Id The client identifier.
@@ -97,10 +107,15 @@ router.get('/wallets', WalletController.getWallets);
 router.post('/wallets', WalletController.createNewWallet);
 
 /**
- * @api {post} / Create new Cards
+ * @apiDefine Cards resources
+ * This optional description belong to to the group admin.
+ */
+
+/**
+ * @api {post} /cards Create new Cards
  *
  * @apiName CreateCards
- * @apiVersion 1
+ * @apiVersion 1.0.0
  *
  * @apiPermission User and Company Id request (JWT Token in real case would contains these value)
  * @apiHeader {integer} Client-Id The client identifier.
@@ -136,10 +151,10 @@ router.post('/wallets', WalletController.createNewWallet);
 router.post('/cards', CardController.createNewCard);
 
 /**
- * @api {get} / List all user cards
+ * @api {get} /cards List all user cards
  *
  * @apiName ListUserCards
- * @apiVersion 1
+ * @apiVersion 1.0.0
  *
  * @apiPermission User and Company Id request (JWT Token in real case would contains these value)
  * @apiHeader {integer} Client-Id The client identifier.
@@ -170,10 +185,10 @@ router.post('/cards', CardController.createNewCard);
 router.get('/cards', CardController.getCards);
 
 /**
- * @api {post} / Load money from wallet
+ * @api {post} /cards/load/:cardId Load money from wallet
  *
  * @apiName LoadMoneyFromWallet
- * @apiVersion 1
+ * @apiVersion 1.0.0
  *
  * @apiPermission User and Company Id request (JWT Token in real case would contains these value)
  * @apiHeader {integer} Client-Id The client identifier.
@@ -195,10 +210,10 @@ router.get('/cards', CardController.getCards);
 router.post('/cards/load/:cardId', CardController.loadMoneyFromWallet);
 
 /**
- * @api {post} / Block card
+ * @api {post} /cards/block/:cardId Block card
  *
  * @apiName BlockCard
- * @apiVersion 1
+ * @apiVersion 1.0.0
  *
  * @apiPermission User and Company Id request (JWT Token in real case would contains these value)
  * @apiHeader {integer} Client-Id The client identifier.
@@ -221,10 +236,10 @@ router.post('/cards/block/:cardId', CardController.blockCard);
 
 
 /**
- * @api {post} / Unblock card
+ * @api {post} /cards/unblock/:cardId Unblock card
  *
  * @apiName UnBlockCard
- * @apiVersion 1
+ * @apiVersion 1.0.0
  *
  * @apiPermission User and Company Id request (JWT Token in real case would contains these value)
  * @apiHeader {integer} Client-Id The client identifier.

@@ -12,7 +12,8 @@
     "serve": "node dist/main.js",
     "test": "jest --forceExit",
     "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix"
+    "lint:fix": "eslint ./src --fix",
+    "apidoc": "apidoc -i src/api -o apidoc"
   },
   "author": "",
   "license": "ISC",
