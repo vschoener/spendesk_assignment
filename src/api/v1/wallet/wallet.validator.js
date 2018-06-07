@@ -20,7 +20,7 @@ export class WalletValidator {
     }
 
     if (!(dataObject.currency in CURRENCIES_LIST)) {
-      throw new Error('Currency is not available');
+      throw new Error('"currency", this value is not available');
     }
 
     return Promise.resolve();

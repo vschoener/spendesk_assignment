@@ -14,7 +14,12 @@ async function createNewWallet(req: $Request, res: $Response, next: any): $Respo
     const wallet = await WalletService.processNewWallet(req.body, req.user);
     return res.status(HttpStatus.CREATED).json(wallet);
   } catch (e) {
-    return next(e);
+    // We should throw a BadRequestError and let middleware handle it
+    return res.status(HttpStatus.BAD_REQUEST).json({
+      error: {
+        message: e.message,
+      },
+    });
   }
 }
 
