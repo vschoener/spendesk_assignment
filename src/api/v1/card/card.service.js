@@ -95,4 +95,26 @@ export default class CardService {
     await card.save();
     return wallet.save();
   }
+
+  /**
+   * UnBlock a user card
+   * @param user
+   * @param cardId
+   * @returns {Promise<void>}
+   */
+  static async unBlockCard(user: Object, cardId: string) {
+    const card: Card = await CardService.getCardFromId(cardId);
+
+    if (card.userId !== user.id) {
+      throw new Error('You don\'t own this card');
+    }
+
+    if (card.status !== CARD_STATUS.BLOCKED) {
+      throw new Error('Card is not blocked');
+    }
+
+    card.status = CARD_STATUS.ENABLED;
+
+    return card.save();
+  }
 }

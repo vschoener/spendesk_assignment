@@ -10,6 +10,7 @@ import CardController from './card/card.controller';
 const router: Router = Router();
 
 // List all route here
+// TODO: Add apiErrorExample
 
 /**
  * @api {get} / Get index
@@ -212,10 +213,36 @@ router.post('/cards/load/:cardId', CardController.loadMoneyFromWallet);
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 200 OK
  *  {
- *    {"success": "Card Blocked"
+ *    {"success": "Card blocked, fund have transferred to the wallet"
  *  }
  *
  */
 router.post('/cards/block/:cardId', CardController.blockCard);
+
+
+/**
+ * @api {post} / Unblock card
+ *
+ * @apiName UnBlockCard
+ * @apiVersion 1
+ *
+ * @apiPermission User and Company Id request (JWT Token in real case would contains these value)
+ * @apiHeader {integer} Client-Id The client identifier.
+ * @apiHeader {integer} Company-Id The company identifier.
+ *
+ * @apiGroup Cards
+ *
+ * @apiDescription UnBlock a user card
+ *
+ * @apiSuccess {success} string Message success
+ *
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *    {"success": "Card unblocked, you can use it again"
+ *  }
+ *
+ */
+router.post('/cards/unblock/:cardId', CardController.unBlockCard);
 
 export default router;
