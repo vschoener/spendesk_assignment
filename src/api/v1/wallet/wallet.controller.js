@@ -9,16 +9,12 @@ import WalletService from './wallet.service';
  * @param {Object} req express request
  * @param {Object} res express response
  */
-async function createNewWallet(req: $Request, res: $Response): $Response {
+async function createNewWallet(req: $Request, res: $Response, next: any): $Response {
   try {
     const wallet = await WalletService.processNewWallet(req.body, req.user);
     return res.status(HttpStatus.CREATED).json(wallet);
   } catch (e) {
-    return res.status(HttpStatus.BAD_REQUEST).json({
-      error: {
-        message: e.message,
-      },
-    });
+    return next(e);
   }
 }
 

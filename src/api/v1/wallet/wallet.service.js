@@ -20,7 +20,15 @@ export default class WalletService {
     return wallet.save();
   }
 
+  static async getWalletFromUser(user: Object) {
+    return Wallet.findOne({ userId: user.id, companyId: user.companyId });
+  }
+
   static async getMasterWallet() {
     return Wallet.findOne({ isMaster: true });
+  }
+
+  static async getWalletFromId(walletId: string) {
+    return Wallet.findOne({ _id: walletId });
   }
 }
