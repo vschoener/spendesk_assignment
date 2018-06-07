@@ -6,8 +6,8 @@ import type { $Request } from 'express';
 
 passport.use('custom', new passportCustom.Strategy((req: $Request, done) => {
   const user = {
-    id: req.headers['user-id'],
-    companyId: req.headers['company-id'],
+    id: parseInt(req.headers['user-id'], 10),
+    companyId: parseInt(req.headers['company-id'], 10),
   };
 
   // Didn't find how to send json custom message for the client.

@@ -51,13 +51,11 @@ router.get('/', HomeController.index);
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 200 OK
  *  {
- *    [{balance": 0,
- *    "numbers": 1234567812341234,
- *    "status": "ENABLED",
+ *    [{"balance": 0,
+ *    "isMaster": true,
  *    "_id": "5b18e3943dfef4091512157f",
- *    "expirationDate": "07/2018",
- *    "ccv": 231,
- *    "walletId": "5b18e0bd2681840761763686",
+ *    "companyId": 1,
+ *    "userId": 1,
  *    "currency": "EUR",
  *    "createdAt": "2018-06-07T07:49:40.588Z",
  *    "updatedAt": "2018-06-07T07:49:40.588Z",
@@ -155,7 +153,7 @@ router.post('/cards', CardController.createNewCard);
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 200 OK
  *  {
- *    [{balance": 0,
+ *    [{"balance": 0,
  *    "numbers": 1234567812341234,
  *    "status": "ENABLED",
  *    "_id": "5b18e3943dfef4091512157f",
@@ -169,5 +167,30 @@ router.post('/cards', CardController.createNewCard);
  *
  */
 router.get('/cards', CardController.getCards);
+
+/**
+ * @api {post} / Load money from wallet
+ *
+ * @apiName LoadMoneyFromWallet
+ * @apiVersion 1
+ *
+ * @apiPermission User and Company Id request (JWT Token in real case would contains these value)
+ * @apiHeader {integer} Client-Id The client identifier.
+ * @apiHeader {integer} Company-Id The company identifier.
+ *
+ * @apiGroup Cards
+ *
+ * @apiDescription Load money in the card from a wallet
+ *
+ * @apiSuccess {success} string Message success
+ *
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *    {"success": "Card Loaded"
+ *  }
+ *
+ */
+router.post('/cards/load/:cardId', CardController.loadMoneyFromWallet);
 
 export default router;

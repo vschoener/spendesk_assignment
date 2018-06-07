@@ -31,6 +31,7 @@ export const schema: mongoose.Schema = new mongoose.Schema({
     // Stored as int do avoid decimal issue
     type: Number,
     default: 0,
+    min: 0,
   },
   currency: {
     type: String,

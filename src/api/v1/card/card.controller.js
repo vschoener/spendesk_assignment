@@ -42,9 +42,29 @@ async function getCards(req: $Request, res: $Response): $Response {
   }
 }
 
+/*
+* Load money from wallet
+* @param {Object} req express request
+* @param {Object} res express response
+*/
+async function loadMoneyFromWallet(req: $Request, res: $Response): $Response {
+  try {
+    await CardService.processLoadFromWallet(req.user, req.params.cardId, req.body.amount);
+    return res.status(HttpStatus.OK).json({ succeed: 'Card loaded' });
+  } catch (e) {
+    // We should throw a BadRequestError and let middleware handle it
+    return res.status(HttpStatus.BAD_REQUEST).json({
+      error: {
+        message: e.message,
+      },
+    });
+  }
+}
+
 const CardController = {
   createNewCard,
   getCards,
+  loadMoneyFromWallet,
 };
 
 export default CardController;
