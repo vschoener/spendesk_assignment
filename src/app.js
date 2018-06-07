@@ -3,7 +3,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 import express from 'express';
-import type { $Application } from 'express';
+import type { $Application, $Request, $Response } from 'express';
+import errorHandler from 'errorhandler';
 import type { AppConfig } from './config/';
 import router from './api';
 import logger from './logger';
@@ -37,7 +38,9 @@ class App {
   initializeExpress() {
     // Attach basics Middleware
 
-    // TODO: Use an error Handler middleware
+    if (this.config.env === 'dev') {
+      this.expressApp.use(errorHandler());
+    }
 
     // Body parser
     this.expressApp.use(bodyParser.json());
@@ -57,6 +60,47 @@ class App {
 
     // Api docs
     this.expressApp.use('/apidoc', express.static('apidoc'));
+
+    this.attachRoutingIssueMiddleware();
+  }
+
+  /**
+   * Handle any problem with routes
+   * @returns {App}
+   */
+  attachRoutingIssueMiddleware(): App {
+    // TODO: Idea, we could improve this using custom Error object and manage each type here
+    this.expressApp.use((req: $Request, res: $Response) => {
+      const error = new Error('Resource not found');
+      res.status(404);
+      return this.responseError(res, error);
+    });
+
+    this.expressApp.use((error: Error, req: $Request, res: $Response, next: any) => {
+      res.status(500);
+      return this.responseError(res, error);
+    });
+
+    return this;
+  }
+
+  /**
+   * @param {e.Response} res
+   * @param {Error} error
+   * @returns {e.Response}
+   */
+  responseError(res: $Response, error: Error): $Response {
+    const result: Object = {
+      message: error.message,
+    };
+
+    if (['dev', 'test'].indexOf(this.config.env) >= 0) {
+      logger.log('error', error.message);
+      logger.log('error', error.stack);
+      result.stack = error.stack;
+    }
+
+    return res.json(result);
   }
 
   async prepareMongoDb(): Promise<void> {

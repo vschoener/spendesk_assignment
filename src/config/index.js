@@ -15,6 +15,7 @@ export type ApiServerConfig = {
 export type AppConfig = {
   api: ApiServerConfig;
   mongodb: MongoConfig;
+  env: string;
 }
 
 //  About new Buffer deprecated in Node 10:
@@ -28,6 +29,7 @@ const appConfig: AppConfig = {
     url: process.env.MONGO_URL || 'mongodb://localhost:27017/temp',
     // No need to set SSL for the test
   },
+  env: process.env.ENV || 'dev',
 };
 
 export default appConfig;

@@ -35,7 +35,7 @@ showlogs:
 ps:
 	docker-compose ps
 
-watch:
+watch: start
 	docker-compose stop app
 	docker-compose run --rm --service-ports app npm run watch
 
