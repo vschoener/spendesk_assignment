@@ -1,4 +1,6 @@
 // @flow
+
+/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "^next$" }] */
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';

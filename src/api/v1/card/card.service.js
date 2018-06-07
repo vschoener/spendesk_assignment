@@ -1,5 +1,5 @@
 import { cardValidator } from './card.validator';
-import {Card, CARD_STATUS} from './card.model';
+import { Card, CARD_STATUS } from './card.model';
 import { Wallet } from '../wallet/wallet.model';
 import WalletService from '../wallet/wallet.service';
 
@@ -34,7 +34,12 @@ export default class CardService {
     return Card.find({ userId: user.id });
   }
 
-  static async getCardFromId(cardId: string) {
+  /**
+   * Get card from id
+   * @param cardId
+   * @returns {Promise<*>}
+   */
+  static async getCardFromId(cardId: string): Card {
     return Card.findOne({ _id: cardId });
   }
 
@@ -45,7 +50,7 @@ export default class CardService {
    * @param amount
    * @returns {Promise<void>}
    */
-  static async processLoadFromWallet(user: Object, cardId: string, amount: number) {
+  static async processLoadFromWallet(user: Object, cardId: string, amount: number): Promise<Card> {
     const card: Card = await CardService.getCardFromId(cardId);
     const wallet: Wallet = await WalletService.getWalletFromId(card.walletId);
 
@@ -65,8 +70,8 @@ export default class CardService {
     card.balance += amount;
     wallet.balance -= amount;
 
-    await card.save();
-    return wallet.save();
+    await wallet.save();
+    return card.save();
   }
 
   /**
@@ -75,7 +80,7 @@ export default class CardService {
    * @param cardId
    * @returns {Promise<void>}
    */
-  static async blockCard(user: Object, cardId: string) {
+  static async blockCard(user: Object, cardId: string): Promise<Card> {
     const card: Card = await CardService.getCardFromId(cardId);
     const wallet: Wallet = await WalletService.getWalletFromId(card.walletId);
 
@@ -92,8 +97,8 @@ export default class CardService {
     card.balance = 0;
     card.status = CARD_STATUS.BLOCKED;
 
-    await card.save();
-    return wallet.save();
+    await wallet.save();
+    return card.save();
   }
 
   /**
@@ -102,7 +107,7 @@ export default class CardService {
    * @param cardId
    * @returns {Promise<void>}
    */
-  static async unBlockCard(user: Object, cardId: string) {
+  static async unBlockCard(user: Object, cardId: string): Promise<Card> {
     const card: Card = await CardService.getCardFromId(cardId);
 
     if (card.userId !== user.id) {

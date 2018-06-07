@@ -43,6 +43,12 @@ docker-compose command on its own.
 
 ### Developer
 
+## Install Flow types
+If you need completion with flow, run:
+```bash
+> flow-typed install --ignoreDeps
+```
+
 ## Watch your code
 
 ```bash

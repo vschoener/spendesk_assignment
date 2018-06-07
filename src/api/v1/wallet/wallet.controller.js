@@ -3,7 +3,6 @@
 import * as HttpStatus from 'http-status-codes';
 import type { $Request, $Response } from 'express';
 import WalletService from './wallet.service';
-import CardService from '../card/card.service';
 
 /**
  * Get welcome message
