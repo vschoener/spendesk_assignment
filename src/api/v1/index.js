@@ -193,4 +193,29 @@ router.get('/cards', CardController.getCards);
  */
 router.post('/cards/load/:cardId', CardController.loadMoneyFromWallet);
 
+/**
+ * @api {post} / Block card
+ *
+ * @apiName BlockCard
+ * @apiVersion 1
+ *
+ * @apiPermission User and Company Id request (JWT Token in real case would contains these value)
+ * @apiHeader {integer} Client-Id The client identifier.
+ * @apiHeader {integer} Company-Id The company identifier.
+ *
+ * @apiGroup Cards
+ *
+ * @apiDescription Block a user card
+ *
+ * @apiSuccess {success} string Message success
+ *
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *    {"success": "Card Blocked"
+ *  }
+ *
+ */
+router.post('/cards/block/:cardId', CardController.blockCard);
+
 export default router;

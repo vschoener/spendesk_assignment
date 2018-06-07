@@ -61,10 +61,30 @@ async function loadMoneyFromWallet(req: $Request, res: $Response): $Response {
   }
 }
 
+/*
+* Load money from wallet
+* @param {Object} req express request
+* @param {Object} res express response
+*/
+async function blockCard(req: $Request, res: $Response): $Response {
+  try {
+    await CardService.blockCard(req.user, req.params.cardId);
+    return res.status(HttpStatus.OK).json({ succeed: 'Card blocked, fund have transferred to the wallet' });
+  } catch (e) {
+    // We should throw a BadRequestError and let middleware handle it
+    return res.status(HttpStatus.BAD_REQUEST).json({
+      error: {
+        message: e.message,
+      },
+    });
+  }
+}
+
 const CardController = {
   createNewCard,
   getCards,
   loadMoneyFromWallet,
+  blockCard,
 };
 
 export default CardController;
